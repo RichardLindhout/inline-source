@@ -2,7 +2,6 @@
 
 const { isFilepath } = require('./lib/utils');
 const context = require('./lib/context');
-const path = require('path');
 const parse = require('./lib/parse');
 const run = require('./lib/run');
 
@@ -26,17 +25,9 @@ exports.inlineSource = function inlineSource(htmlpath, options = {}) {
     const ctx = context.create(options);
 
     // Load html content
-    if (isFilepath(htmlpath)) {
-      ctx.htmlpath = path.resolve(htmlpath);
-      try {
-        ctx.html = ctx.fs.readFileSync(ctx.htmlpath, 'utf8');
-      } catch (err) {
-        return reject(err);
-      }
-      // Passed file content instead of path
-    } else {
-      ctx.html = htmlpath;
-    }
+ 
+     ctx.html = htmlpath;
+    
 
     try {
       await parse(ctx);
